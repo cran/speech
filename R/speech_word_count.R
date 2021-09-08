@@ -1,13 +1,13 @@
 #' @title Number of words
 #' @description Word count.
 #' @param string character of length equal to or greater than one.
+#' @param rm.name by default is \code{FALSE}. Remove word 'SENOR' and name of legislator.
 #' @param exclude words that are to be excluded from counting.
 #' @param min.char integer that determines the words that have less than a
 #'     certain number of characters.
 #' @param rm.long integer that determines the number of characters from which
 #'     words have to be deleted from the count.
-#' @param replace.punct logical. If \code{TRUE} punctuation marks within a single
-#'      word will be replaced by a space. By default is \code{TRUE}.
+#' @param replace.punct by default is "".
 #' @param rm.num logical. Indicates whether the numbers in the count will be
 #'     eliminated.
 #' @return integer.
@@ -28,31 +28,45 @@
 #' speech_word_count(r, rm.num = TRUE)
 #'
 #' speech_word_count(NA)
+#'
+#' \donttest{
+#' # url <- "http://bit.ly/35AUVF4"
+#' # out <- speech_build(file = url, compiler = TRUE)
+#' # out$word <- speech_word_count(out$speech, rm.name = TRUE)
+#' # out$word2 <- speech_word_count(out$speech)
+#' }
 #' @export
 
-speech_word_count <- function(string, exclude = NULL, min.char = 0L, rm.long = Inf,
+
+speech_word_count <- function(string, rm.name = FALSE, exclude = NULL, min.char = 0L, rm.long = Inf,
                               rm.num = FALSE, replace.punct = ""){
 
+    s_name <- string
     string[is.na(string)] <- ""
     string <- string %>%
         gsub(pattern = "\n|\t", replacement = " ", x = .) %>%
         gsub(pattern = "[[:punct:]]", replacement = replace.punct, x = .)
 
-    if(rm.num){string <- stringr::str_remove_all(string,pattern = "\\d")}
-
-    string %>%
-    strsplit(., split = " ") %>%
-    purrr::map_int(., function(x){
-                        tibble::enframe(x, name = NULL) %>%
-                        dplyr::mutate('char' = nchar('value')) %>%
-                        dplyr::filter('char' > min.char, 'char' < rm.long, !('value' %in% exclude)) %>%
-                        nrow()}) %>%
+    if(rm.num){
+        string <- stringr::str_remove_all(string,pattern = "\\d")
+    }
+    string <-
+        string %>%
+        strsplit(., split = " ") %>%
+        purrr::map_int(., function(x){
+            tibble::enframe(x, name = NULL) %>%
+                dplyr::mutate('char' = nchar('value')) %>%
+                dplyr::filter('char' > min.char, 'char' < rm.long, !('value' %in% exclude)) %>%
+                nrow()}) %>%
         ifelse(.== 0L, NA_integer_, .)
 
-
+    if(rm.name){
+        n <- stringr::str_count(s_name, "SE\u00d1OR ")
+        name <- sapply(strsplit(stringr::str_extract(s_name, pattern = "[[A-Z\u00d1 ]{2,}]+([A-Z ]+\\. |\\s)"), " "), length) - 1
+        m <- n + (n*name)
+        string <- string - m
+    }
+    string
 }
-
-
-
 
 

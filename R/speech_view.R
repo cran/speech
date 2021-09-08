@@ -7,19 +7,25 @@
 #' @return data.frame.
 #' @examples
 #' \donttest{
-#' url <- "http://bit.ly/35AUVF4"
-#' out <- speech_build(file = url)
-#' speech_view(tidy_speech = out, legis = c("ABDALA", "LAZO"), view = FALSE)
+#' # url <- "http://bit.ly/35AUVF4"
+#' # out <- speech_build(file = url)
+#' # speech_view(tidy_speech = out, legis = c("ABDALA", "LAZO"), view = FALSE)
 #' }
 #' @export
 
 speech_view <- function(tidy_speech, legis = character(), view = FALSE){
 
-        if(!inherits(tidy_speech, "puy")){stop("Input is not of class 'puy'.", call. = FALSE)}
-        error_legis <- tidy_speech[tidy_speech$legislator %in% legis,]
-        if(view) utils::View(error_legis) else print(error_legis, n = Inf)
-}
+    if(!inherits(tidy_speech, "puy")){
+        stop("Input is not of class 'puy'.", call. = FALSE)
 
+    }
+    error_legis <- tidy_speech[tidy_speech$legislator %in% legis,]
+    if(view){
+        utils::View(error_legis)
+    } else {
+            print(error_legis, n = Inf)}
+
+}
 
 
 

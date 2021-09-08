@@ -52,6 +52,7 @@ data.frame class \code{puy} with the following variables:
             \item{\code{date}: session date}
             \item{\code{id}: name \code{file}}
             \item{\code{legislature}: legislature id (period of government)}
+            \item{\code{sex}: sex}
             \item{\code{chamber}: chamber to which the document belongs.
             It can be: Chamber of Representatives, Senate, General Assembly or Permanent Commission.}
            }
@@ -79,18 +80,18 @@ This function converts PDF documents to data.frame. The conversion is
 }
 \examples{
 \donttest{
-url <- "http://bit.ly/35AUVF4"
-out <- speech_build(file = url)
+# url <- speech::speech_url(chamber = "C", from = "17-09-2019", to = "17-09-2019")
+# out <- speech_build(file = url)
 
-out <- speech_build(file = url, compiler = FALSE,
-                     quality = TRUE,
-                     add.error.sir = c("SEf'IOR"),
-                     rm.error.leg = c("PRtSIDENTE", "SUB", "PRfSlENTE"),
-                     param = list(char = 6000, drop.page = 3))
+# out <- speech_build(file = url, compiler = FALSE,
+#                     quality = TRUE,
+#                     add.error.sir = c("SEf'IOR"),
+#                     rm.error.leg = c("PRtSIDENTE", "SUB", "PRfSlENTE"),
+#                     param = list(char = 6000, drop.page = 3))
 
-out <- list.files(pattern = "*.pdf") \%>\% speech_build()
+# out <- list.files(pattern = "*.pdf") \%>\% speech_build()
 
-out <- list.files(pattern = "*.pdf") \%>\%
-    speech_build(., compiler = TRUE, param = list(char = 4500, drop.page = 3))
+# out <- list.files(pattern = "*.pdf") \%>\%
+#     speech_build(., compiler = TRUE, param = list(char = 4500, drop.page = 3))
 }
 }

@@ -7,7 +7,7 @@
 speech_check(tidy_speech, initial, expand = FALSE)
 }
 \arguments{
-\item{tidy_speech}{data.frame class \code{puy}}
+\item{tidy_speech}{data.frame.}
 
 \item{initial}{character vector. Initial of the legislators' names. If no
 initial is entered, all will be checked.}
@@ -24,8 +24,8 @@ It allows to check that the names of the legislators are
 }
 \examples{
 \donttest{
-url <- "http://bit.ly/35AUVF4"
-out <- speech_build(file = url)
-speech_check(out, initial = c("A", "M"), expand = FALSE)
+# url <- "http://bit.ly/35AUVF4"
+# out <- speech_build(file = url)
+# speech_check(out, initial = c("A", "M"), expand = FALSE)
 }
 }

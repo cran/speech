@@ -1,14 +1,6 @@
 #' @importFrom magrittr %>%
-#' @export
-magrittr::`%>%`
-
-#' @importFrom lubridate ymd
-#' @export
-lubridate::ymd
-
-#' @importFrom lubridate %within%
-#' @export
-lubridate::`%within%`
+#' @importFrom lubridate %within% ymd
+#' @importFrom pdftools pdf_text
 
 
 if(getRversion() >= "2.15.1"){
@@ -16,95 +8,357 @@ if(getRversion() >= "2.15.1"){
     utils::suppressForeignCheck(c('.'))
 }
 
+legislature <- function(df, name_var_date){
 
-legislature <- function(df, name_var_date ){
-
-        l42 <- lubridate::interval(ymd("1985-02-15"), ymd("1990-02-14"))
-        l43 <- lubridate::interval(ymd("1990-02-15"), ymd("1995-02-14"))
-        l44 <- lubridate::interval(ymd("1995-02-15"), ymd("2000-02-14"))
-        l45 <- lubridate::interval(ymd("2000-02-15"), ymd("2005-02-14"))
-        l46 <- lubridate::interval(ymd("2005-02-15"), ymd("2010-02-14"))
-        l47 <- lubridate::interval(ymd("2010-02-15"), ymd("2015-02-14"))
-        l48 <- lubridate::interval(ymd("2015-02-15"), ymd("2020-02-14"))
-        l49 <- lubridate::interval(ymd("2020-02-15"), ymd("2025-02-14"))
-        df  <- as.data.frame(df)
-        f   <- df[, names(df) == name_var_date]
-        f2  <- numeric(nrow(df))
-        for(i in seq_along(f)){
-                if(f[i] %within% l42){f2[i] <- 42L}
-                if(f[i] %within% l43){f2[i] <- 43L}
-                if(f[i] %within% l44){f2[i] <- 44L}
-                if(f[i] %within% l45){f2[i] <- 45L}
-                if(f[i] %within% l46){f2[i] <- 46L}
-                if(f[i] %within% l47){f2[i] <- 47L}
-                if(f[i] %within% l48){f2[i] <- 48L}
-                if(f[i] %within% l49){f2[i] <- 49L}
-        }
-        f2
+    legislaturas$interval <- lubridate::interval(legislaturas$fecha_inicio, legislaturas$fecha_fin)
+    df  <- as.data.frame(df)
+    f   <- df[, names(df) == name_var_date]
+    f2  <- numeric(nrow(df))
+    for(i in 1:length(f2)){
+        w <- which(f[i] %within% legislaturas$interval)
+        f2[i] <-ifelse(is.numeric(w), w, NA)
+    }
+    as.integer(f2)
 }
 
-aux <- function(object){
 
+aux <- function(object){
         if(object == "esir"){
-                object <- paste(c("SEJ\u00d1OR", "8E\u00d1OR", "~E~WR",  "SE~OR", "S~OR", "SEROR", "SMOR", "SE:ROR",
-                                  "SEJ.'ilOR", "SElilOR", "SEJ'ilOR", "SEl'ilOR", "SE:\u00d1OR", "SEJ\u00d1OR", "S\u00d1~OR",
-                                  "S@OR", "SE:l'tOR", "SEJS'OR","SUOB", "SENOR", "SE:f.tOR","SEI'\u00ed\"OR", "SEJ.~OR",
-                                  "SEI'lOR", "SJ.~OR","SEl~OR", "SE'\u00d1OR", "SE~JOR", "SEf~OR", "SEtlOR", "SEf.JOR",
-                                  "SEfjO\u00edl", "SEfJOR", "SEl\\IOR", "SEtilOR", "SEl\\\\IOR", "SEl\\\\JOR", "SEl'JOR",
-                                  "DiSE\u00d1OR", "SEfilOR", "Sel'ior", "SEi\\\\.IOR", "SEi\\\\JOR", "SEl\"JOR",
-                                  "SEJli.lOR", "SE\"'OR", "SEJ\\\\IOR", "SEt\\\\i\u00f3R", "SEl\'.IOR", "SEIQOR",
-                                  "SEl\'IOR", "SEt\\IOR", "SEl'i.IOR", "SEl'JOR", "SEI'JOR", "SEJ\\)j'OR", "SEf'IOR",
-                                  "SEJ\\\\.IOR",  "SEt:JOR", "SEl\"ilOR", "SEl\"IOR", "SE\\!\\\\JOR", "SE!ilCF",
-                                  "SEf;IOR", "SEISIOR", "Sl;\u00d1OR", "SEAOR", "SEf.ilOR", "SE1'10R", "SEFIDR",
-                                  "SEt\\\\IOR", "SEt\\\\10", "SEf.IOR", "SEl'iJOR", "SEf:.IOR", "SEJ\\\\JOR",
-                                  "SEf110R", "SEl\\\\IQR", "SEl\\\\.IOR",  "SErilOR", "SE\u00d1.OR", "SE!'JOR",
-                                  "SEl'\u00ed\\!OA", "SEici\\!OR", "SEl\"lOR", "SEi\\\\lOR", "SEl\\\\jOR", "SERcR",
-                                  "SEF40R", "seiQOR", "SEtl:IOR", "SEl\\\\iOR", "SEf'IOR", "SEli\u00edOR",
-                                  "SEKIOR", "SEf;IQR", "SE;tilOR", "SEl'\\\\JOR", "SEl'iilOR", "SE\"10R", "SEJli.IOR",
-                                  "SEf;iOR", "SEOOR", "sElilOR", "SEF:IOR", "~OR", "SE~CR", "S~OO", "SEfJOO",
-                                  "SEFJOR", "5ERCR", "Se:F:lOR", "SERCR", "SEfilCR", "SERDR", "SEACR", "SElilCR",
-                                  "SERQR", "sEROR", "SEFIOR", "soberSa:lCR", "SEfi\\!CR", "SER00", "SE\u00d1OO",
-                                  "SERcF",  "SERoR",  "SEfilOO", "SEFICR", "srnCR", "SEFICR", "SEFICR", "SEfiIDR",
-                                  "SE\u00d1CR", "srnOR", "SEFlOR", "SEf;\u00edOR", "SEFlOR", "SEf:loR", "SEru:R",
-                                  "SERt:R", "SEl'\\!CR", "SEf:\u00edCR", "SEFKR", "sERCR", "Srnffi", "SEF\\!ffi",
-                                  "SElllOR", "SERclR", "SElllCR", "SEl'lOR", "SEfilffi", "SER~","SEF'.lffi",
-                                  "SENDR", "~ENOR", "SEfKJR", "SHIOR", "SEf.\u00edOR", "SEf:ICJf", "SEflOR", "SEr:.no",
-                                  "SEFillR", "SEf:ICR", "Sf\u00d1OR", "s~rn", "SEfiicF", "SE\u00d1ffi", "SEli\u00edrn",
-                                  "SEfiiOR", "SEf:lrn", "SEli\u00edCR", "SEli\u00edCR", "SEf;lffi","sEFJOR", "SEFlCR",
-                                  "SEli\u00edCF", "SEf:lOR", "SER0R", "SE\u00d1CJ", "SEF30R", "SEfllOR", "SEFJCIR",
-                                  "SEf'lff",  "SElilc:R", "SEf.lCR", "SEf.1CR", "SEf'.lOR", "SE\u00edlOR", "srnoR",
-                                  "SEf.ioR", "SE\\!ilOR", "SEF4QR", "SERffi", "~ FREY", "SEb",  "SEfIDR", "SeF\u00edor",
-                                  "SEl\\\\lOR", "SE\u00d1\u00faR", "SEf\u00edOR", "SE\u00d1LA", "SEROO", "SEFJDR", "SEFat",
-                                  "SEfiKJR", "SE\\(i:l\\(\\]R", "SEf;\\(\\)R", "SE\\!irJR", "SEliiOR", "SEf.lOR",
-                                  "StFlOR", "St~", "SEIQOA", "SEFloR", "SEROFI", "SEFaelR", "S\\[SE\u00d1OR", "~Ef'.JOR",
-                                  "SrnDR", "SEJ!itOR", "SE:&OR", "SI!;\u00d1OR", "SE:\u00d1'OR", "SE\u00edi\u00ed\"OR",
-                                  "SE1il'OR", "SEiil'OR", "SEl'll\"OR", "SDOR", "SElil'OR", "SE:f\u00edrOR", "SEilOR",
-                                  "SEJI:lOR", "SE:f.iOR", "SEI'l'OR", "SEI\\\\fOR", "SimOR", "SE:filOR", "SEl\\\\!OR",
-                                  "SE'lllOR", "SEJ:ItOR",  "SEl'tOR", "SElliOR", "8!:-..\u00d1OR", "SE:l.ll'OR",
-                                  "SEfiOR", "SE'fi'tOR", "SE&OR", "SEl'i:lOR", "SE:r::tOR", "SEl'\u00ed'OR", "SEiitOR",
-                                  "SE:AOR", "SEftOR", "SE:FJOR", "SE1i\u00edOR", "SE:fil\"OR", "SE:fil'OR", "SmOR",
-                                  "SF\u00d1OR", "S:EaOR", "tSE\u00d1OR", "SEl'\u00edOR", "SE1iiOR", "SFmOR", "SE\u00ediJOR",
-                                  "SE1tOR", "SE:\u00d1OR", "SERo:a", "SE:flrOR", "SE:IilOR", "SEA'OR","SE~", ",SE:&OR",
-                                  "SE\"&OR",  "SE:fiOR", "SEI'tOR", "SE'&OR",  "SElitOR", "s~oR",
-                                  "SE.fjOR", "SE::lQ'OR", "SdOR", "S~", "SE:ftOR",  "SEI'!OR", "SEI'IOR",
-                                  "smoR", "SE&QR", "SE\u00d1QR", "SE:\u00edi\u00ed'OR", "SEt\\\u00edOR",
-                                  "SI \u00d1OR", "SE \u00d1OR"
+
+                object <- paste(c("SEJ\u00d1OR",
+                                  "8E\u00d1OR",
+                                  "~E~WR",
+                                  "SE~OR",
+                                  "S~OR",
+                                  "SEROR",
+                                  "SMOR",
+                                  "SE:ROR",
+                                  "SEJ.'ilOR",
+                                  "SElilOR",
+                                  "SEJ'ilOR",
+                                  "SEl'ilOR",
+                                  "SE:\u00d1OR",
+                                  "SEJ\u00d1OR",
+                                  "S\u00d1~OR",
+                                  "S@OR",
+                                  "SE:l'tOR",
+                                  "SEJS'OR",
+                                  "SUOB",
+                                  "SENOR",
+                                  "SE:f.tOR",
+                                  "SEI'\u00ed\"OR",
+                                  "SEJ.~OR",
+                                  "SEI'lOR",
+                                  "SJ.~OR",
+                                  "SEl~OR",
+                                  "SE'\u00d1OR",
+                                  "SE~JOR",
+                                  "SEf~OR",
+                                  "SEtlOR",
+                                  "SEf.JOR",
+                                  "SEfjO\u00edl",
+                                  "SEfJOR",
+                                  "SEl\\IOR",
+                                  "SEtilOR",
+                                  "SEl\\\\IOR",
+                                  "SEl\\\\JOR",
+                                  "SEl'JOR",
+                                  "DiSE\u00d1OR",
+                                  "SEfilOR",
+                                  "Sel'ior",
+                                  "SEi\\\\.IOR",
+                                  "SEi\\\\JOR",
+                                  "SEl\"JOR",
+                                  "SEJli.lOR",
+                                  "SE\"'OR",
+                                  "SEJ\\\\IOR",
+                                  "SEt\\\\i\u00f3R",
+                                  "SEl\'.IOR",
+                                  "SEIQOR",
+                                  "SEl\'IOR",
+                                  "SEt\\IOR",
+                                  "SEl'i.IOR",
+                                  "SEl'JOR",
+                                  "SEI'JOR",
+                                  "SEJ\\)j'OR",
+                                  "SEf'IOR",
+                                  "SEJ\\\\.IOR",
+                                  "SEt:JOR",
+                                  "SEl\"ilOR",
+                                  "SEl\"IOR",
+                                  "SE\\!\\\\JOR",
+                                  "SE!ilCF",
+                                  "SEf;IOR",
+                                  "SEISIOR",
+                                  "Sl;\u00d1OR",
+                                  "SEAOR",
+                                  "SEf.ilOR",
+                                  "SE1'10R",
+                                  "SEFIDR",
+                                  "SEt\\\\IOR",
+                                  "SEt\\\\10",
+                                  "SEf.IOR",
+                                  "SEl'iJOR",
+                                  "SEf:.IOR",
+                                  "SEJ\\\\JOR",
+                                  "SEf110R",
+                                  "SEl\\\\IQR",
+                                  "SEl\\\\.IOR",
+                                  "SErilOR",
+                                  "SE\u00d1.OR",
+                                  "SE!'JOR",
+                                  "SEl'\u00ed\\!OA",
+                                  "SEici\\!OR",
+                                  "SEl\"lOR",
+                                  "SEi\\\\lOR",
+                                  "SEl\\\\jOR",
+                                  "SERcR",
+                                  "SEF40R",
+                                  "seiQOR",
+                                  "SEtl:IOR",
+                                  "SEl\\\\iOR",
+                                  "SEf'IOR",
+                                  "SEli\u00edOR",
+                                  "SEKIOR",
+                                  "SEf;IQR",
+                                  "SE;tilOR",
+                                  "SEl'\\\\JOR",
+                                  "SEl'iilOR",
+                                  "SE\"10R",
+                                  "SEJli.IOR",
+                                  "SEf;iOR",
+                                  "SEOOR",
+                                  "sElilOR",
+                                  "SEF:IOR",
+                                  "~OR",
+                                  "SE~CR",
+                                  "S~OO",
+                                  "SEfJOO",
+                                  "SEFJOR",
+                                  "5ERCR",
+                                  "Se:F:lOR",
+                                  "SERCR",
+                                  "SEfilCR",
+                                  "SERDR",
+                                  "SEACR",
+                                  "SElilCR",
+                                  "SERQR",
+                                  "sEROR",
+                                  "SEFIOR",
+                                  "soberSa:lCR",
+                                  "SEfi\\!CR",
+                                  "SER00",
+                                  "SE\u00d1OO",
+                                  "SERcF",
+                                  "SERoR",
+                                  "SEfilOO",
+                                  "SEFICR",
+                                  "srnCR",
+                                  "SEFICR",
+                                  "SEFICR",
+                                  "SEfiIDR",
+                                  "SE\u00d1CR",
+                                  "srnOR",
+                                  "SEFlOR",
+                                  "SEf;\u00edOR",
+                                  "SEFlOR",
+                                  "SEf:loR",
+                                  "SEru:R",
+                                  "SERt:R",
+                                  "SEl'\\!CR",
+                                  "SEf:\u00edCR",
+                                  "SEFKR",
+                                  "sERCR",
+                                  "Srnffi",
+                                  "SEF\\!ffi",
+                                  "SElllOR",
+                                  "SERclR",
+                                  "SElllCR",
+                                  "SEl'lOR",
+                                  "SEfilffi",
+                                  "SER~",
+                                  "SEF'.lffi",
+                                  "SENDR",
+                                  "~ENOR",
+                                  "SEfKJR",
+                                  "SHIOR",
+                                  "SEf.\u00edOR",
+                                  "SEf:ICJf",
+                                  "SEflOR",
+                                  "SEr:.no",
+                                  "SEFillR",
+                                  "SEf:ICR",
+                                  "Sf\u00d1OR",
+                                  "s~rn",
+                                  "SEfiicF",
+                                  "SE\u00d1ffi",
+                                  "SEli\u00edrn",
+                                  "SEfiiOR",
+                                  "SEf:lrn",
+                                  "SEli\u00edCR",
+                                  "SEli\u00edCR",
+                                  "SEf;lffi",
+                                  "sEFJOR",
+                                  "SEFlCR",
+                                  "SEli\u00edCF",
+                                  "SEf:lOR",
+                                  "SER0R",
+                                  "SE\u00d1CJ",
+                                  "SEF30R",
+                                  "SEfllOR",
+                                  "SEFJCIR",
+                                  "SEf'lff",
+                                  "SElilc:R",
+                                  "SEf.lCR",
+                                  "SEf.1CR",
+                                  "SEf'.lOR",
+                                  "SE\u00edlOR",
+                                  "srnoR",
+                                  "SEf.ioR",
+                                  "SE\\!ilOR",
+                                  "SEF4QR",
+                                  "SERffi",
+                                  "~ FREY",
+                                  "SEb",
+                                  "SEfIDR",
+                                  "SeF\u00edor",
+                                  "SEl\\\\lOR",
+                                  "SE\u00d1\u00faR",
+                                  "SEf\u00edOR",
+                                  "SE\u00d1LA",
+                                  "SEROO",
+                                  "SEFJDR",
+                                  "SEFat",
+                                  "SEfiKJR",
+                                  "SE\\(i:l\\(\\]R",
+                                  "SEf;\\(\\)R",
+                                  "SE\\!irJR",
+                                  "SEliiOR",
+                                  "SEf.lOR",
+                                  "StFlOR",
+                                  "St~",
+                                  "SEIQOA",
+                                  "SEFloR",
+                                  "SEROFI",
+                                  "SEFaelR",
+                                  "S\\[SE\u00d1OR",
+                                  "~Ef'.JOR",
+                                  "SrnDR",
+                                  "SEJ!itOR",
+                                  "SE:&OR",
+                                  "SI!;\u00d1OR",
+                                  "SE:\u00d1'OR",
+                                  "SE\u00edi\u00ed\"OR",
+                                  "SE1il'OR",
+                                  "SEiil'OR",
+                                  "SEl'll\"OR",
+                                  "SDOR",
+                                  "SElil'OR",
+                                  "SE:f\u00edrOR",
+                                  "SEilOR",
+                                  "SEJI:lOR",
+                                  "SE:f.iOR",
+                                  "SEI'l'OR",
+                                  "SEI\\\\fOR",
+                                  "SimOR",
+                                  "SE:filOR",
+                                  "SEl\\\\!OR",
+                                  "SE'lllOR",
+                                  "SEJ:ItOR",
+                                  "SEl'tOR", "SElliOR",
+                                  "8!:-..\u00d1OR",
+                                  "SE:l.ll'OR",
+                                  "SEfiOR",
+                                  "SE'fi'tOR",
+                                  "SE&OR",
+                                  "SEl'i:lOR",
+                                  "SE:r::tOR",
+                                  "SEl'\u00ed'OR",
+                                  "SEiitOR",
+                                  "SE:AOR",
+                                  "SEftOR",
+                                  "SE:FJOR",
+                                  "SE1i\u00edOR",
+                                  "SE:fil\"OR",
+                                  "SE:fil'OR",
+                                  "SmOR",
+                                  "SF\u00d1OR",
+                                  "S:EaOR",
+                                  "tSE\u00d1OR",
+                                  "SEl'\u00edOR",
+                                  "SE1iiOR",
+                                  "SFmOR",
+                                  "SE\u00ediJOR",
+                                  "SE1tOR",
+                                  "SE:\u00d1OR",
+                                  "SERo:a",
+                                  "SE:flrOR",
+                                  "SE:IilOR",
+                                  "SEA'OR","SE~",
+                                  ",SE:&OR",
+                                  "SE\"&OR",
+                                  "SE:fiOR",
+                                  "SEI'tOR",
+                                  "SE'&OR",
+                                  "SElitOR",
+                                  "s~oR",
+                                  "SE.fjOR",
+                                  "SE::lQ'OR",
+                                  "SdOR",
+                                  "S~",
+                                  "SE:ftOR",
+                                  "SEI'!OR",
+                                  "SEI'IOR",
+                                  "smoR",
+                                  "SE&QR",
+                                  "SE\u00d1QR",
+                                  "SE:\u00edi\u00ed'OR",
+                                  "SEt\\\u00edOR",
+                                  "SI \u00d1OR",
+                                  "SE \u00d1OR"
                                   ),
                                 collapse = "|")
+
         }
+
         if(object == "meses"){
-                object <- paste(c("ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO", "JULIO", "AGOSTO",
-                                  "SETIEMBRE", "OCTUBRE", "NOVIEMBRE", "DICIEMBRE", "SEPTIEMBRE", "ENER", "FEBR"),
+
+                object <- paste(c("ENERO",
+                                  "FEBRERO",
+                                  "MARZO",
+                                  "ABRIL",
+                                  "MAYO",
+                                  "JUNIO",
+                                  "JULIO",
+                                  "AGOSTO",
+                                  "SETIEMBRE",
+                                  "OCTUBRE",
+                                  "NOVIEMBRE",
+                                  "DICIEMBRE",
+                                  "SEPTIEMBRE",
+                                  "ENER",
+                                  "FEBR"),
                                 collapse = "|")
+
         }
         if(object == "eleg"){
+
                 object <- "^(PRES|PESI|ESIDEN|SIDENTE|RESIDENT|SENAD|REPRE|SECRE|MINIS|LEGIS|PROSE|SUBSEC|DIPUTAD"
+
         }
+
         if(object == "chamb"){
-                object <- c("ASAMBLEA GENERAL", "CAMARA DE SENADORES",
-                            "CAMARA DE REPRESENTANTES", "COMISION PERMANENTE",
-                            "GENERAL", "SENADORES", "REPRESENTANTES", "PERMANENTE")
+
+                object <- c("ASAMBLEA GENERAL",
+                            "CAMARA DE SENADORES",
+                            "CAMARA DE REPRESENTANTES",
+                            "COMISION PERMANENTE",
+                            "GENERAL", "SENADORES",
+                            "REPRESENTANTES",
+                            "PERMANENTE")
+
         }
+
         object
 }
 
@@ -112,9 +366,11 @@ speech.pow <- function(file, add.error.sir = NULL, rm.error.leg = NULL, compiler
                        quality = FALSE, param = list(char = 6500, drop.page = 2)){
 
         esir <- aux("esir")
+
         if(!is.null(add.error.sir)){
                 esir <- paste0(esir, "|", paste0(add.error.sir, collapse = "|"), collapse = "")
         }
+
         tabulizer::stop_logging()
         suppressWarnings(
                 text <- tabulizer::extract_text(file = file, page = NULL, encoding = "UTF-8") %>%
@@ -134,6 +390,7 @@ speech.pow <- function(file, add.error.sir = NULL, rm.error.leg = NULL, compiler
         clave <- stringr::str_which(text, "^SE\u00d1OR")
         clave <- clave[clave > 300]
         ident <- sub("([^.]+)\\.[[:alnum:]]+$", "\\1", basename(file))
+
         if(length(clave) <= 1){
                 warning(paste("The document", ident,"does not contain interventions by legislators or it is not possible to recognize them in the text. \n"), call. = FALSE)
         }else{
@@ -143,6 +400,7 @@ speech.pow <- function(file, add.error.sir = NULL, rm.error.leg = NULL, compiler
                         vec_speech[i] <- paste(text[clave[i]:(clave[i+1]-1)], collapse = " ")
                 }
                 ## legis name --------------------------------------------------
+
                 vec_speech2 <- chartr('\u00e1\u00e9\u00ed\u00f3\u00fa','aeiou', vec_speech)
                 legis <- substring(vec_speech2, 1, regexpr("[a-z]|[A-Z]+\\s+[a-z]", vec_speech2) -2) %>%
                         stringr::str_remove_all(pattern = "(SE\u00d1ORES|SE\u00d1ORA|SE\u00d1OR)")
@@ -157,27 +415,33 @@ speech.pow <- function(file, add.error.sir = NULL, rm.error.leg = NULL, compiler
                 legis <- legis %>%
                         stringr::str_remove_all(pattern = "(SE\u00d1ORES|SE\u00d1ORA|SE\u00d1OR)") %>%
                         stringr::str_remove_all(pattern = "[^[:alnum:][:blank:]?/\\:-]") %>%
-                        stringr::str_remove_all(pattern = "[^A-z. ]") %>%  ### check A-Z or A-z
+                        stringr::str_remove_all(pattern = "[^A-z\u00d1\u00F1. ]") %>%  ### check A-Z or A-z
                         stringr::str_squish()
+
                 ## date --------------------------------------------------------
                 meses <- aux("meses")
                 fe <- stringr::str_which(toupper(text[1:150]), pattern = meses)
-                if(length(fe)!=0){
+                if(length(fe) != 0){
                         suppressWarnings(
                                 fdiario <- c(text[fe[1]-2], text[fe[1]], substring(text[fe[1]+2], 1, 4)) %>%
                                         paste(., collapse = " ") %>%
                                         stringr::str_squish()%>%
                                         lubridate::parse_date_time(order = "dmy")
                         )
+                        fdiario <- as.Date(fdiario)
                 }else{
                         fdiario <- NA
                 }
                 ## chamber -----------------------------------------------------
+
                 chamb <- aux("chamb")
                 cha <- text[1:50] %>% chartr('\u00c1\u00c9\u00cd\u00d3\u00da','AEIOU',.) %>% paste(collapse = " ") %>%
                         gsub(pattern = "  ", replacement = " ", .)
+
                 cha <- chamb[stringr::str_which(cha, chamb)[1]] %>% chamber_fit()
+
                 ## legislature -------------------------------------------------
+
                 text2 <- tibble::tibble(
                         legislator = chartr('\u00c1\u00c9\u00cd\u00d3\u00da','AEIOU', legis),
                         speech = vec_speech,
@@ -187,7 +451,7 @@ speech.pow <- function(file, add.error.sir = NULL, rm.error.leg = NULL, compiler
                 if(!is.na(fdiario)){
                         text2$legislature <- legislature(text2, name_var_date = "date")
                 }else{
-                        text2$legislature <- NA
+                        text2$legislature <- NA_integer_
                 }
                 text2$id <- ident
                 eleg <- aux("eleg")
@@ -203,13 +467,15 @@ speech.pow <- function(file, add.error.sir = NULL, rm.error.leg = NULL, compiler
                 if(nrow(text2)==0L){
                         warning(paste("The document", ident,"only contains interventions by the president. \n"), call. = FALSE)
                 }
+
                 ## class for compiler ---------------------------------
+
                 rmhead <- header(file = file)
                 text2$speech <- stringr::str_replace_all(text2$speech, "\\s{2,}", " ")
                 for(i in seq_along(rmhead)){text2$speech <- gsub(x = text2$speech, pattern = rmhead[i], replacement = "", fixed = TRUE)}
 
                 if(quality){
-                        if(nrow(text2)!=0L){
+                        if(nrow(text2) != 0L){
                                 n1 <- sum(nchar(text)) + length(text)
                                 index_1 <- (param$char * (length(rmhead) - param$drop.page))/n1
                                 index_2 <- sum(nchar(text2$speech))/n1
@@ -228,13 +494,23 @@ compiler <- function(tidy_speech, compiler_by = character()){
 
     vars <- match(compiler_by, names(tidy_speech))
 
-    if(length(vars) == 0L){stop("The variables of 'tidy speech' do not match those of 'compiler_by'", call. = FALSE)}
-    if(length(vars) != length(compiler_by)){warning("Not all the variables of 'compiler_by' are in 'tidy speech'", call. = FALSE)}
+    if(length(vars) == 0L){
+        stop("The variables of 'tidy speech' do not match those of 'compiler_by'", call. = FALSE)
+    }
+
+    if(length(vars) != length(compiler_by)){
+        warning("Not all the variables of 'compiler_by' are in 'tidy speech'", call. = FALSE)
+    }
+
     war <- sapply(tidy_speech[, compiler_by], FUN = function(x){any(is.na(x))})
     war <- names(war)[war == TRUE]
-    if(length(war) > 0){warning(paste("Variables that are in 'compiler_by' contain NA values:", paste(war, collapse = ", ")), call. = FALSE)}
 
-    tidy_speech$rec <- apply(tidy_speech[,vars], 1, paste, collapse = "__")
+    if(length(war) > 0){
+        warning(paste("Variables that are in 'compiler_by' contain NA values:", paste(war, collapse = ", ")), call. = FALSE)
+    }
+    vars <- compiler_by[!compiler_by %in% war] #:-->*
+
+    tidy_speech$rec <- apply(tidy_speech[,vars], 1, paste, collapse = "__") #:-->*
     ts_out <- tidy_speech %>% base::split(.$rec)
     cby <- tibble::tibble('varid' = names(ts_out))
     out <- ts_out %>%
@@ -243,15 +519,33 @@ compiler <- function(tidy_speech, compiler_by = character()){
         }) %>%
         dplyr::bind_rows() %>%
         dplyr::bind_cols(cby,.) %>%
-        tidyr::separate('varid', into = compiler_by , sep = "__")
+        tidyr::separate('varid', into = vars, sep = "__")##
+
+    if("legislature" %in% vars){ #:-->*
+        out$legislature <- as.integer(out$legislature)
+    }
+
+    if("date" %in% vars){ #:-->*
+        if(is.character(tidy_speech$date)){out$date <- NA}
+        out$date <- as.Date(out$date)
+    }
+
+    if(length(war) > 0){ #:-->*
+        for(i in 1:length(war)){out[, war[i]] <- NA} #:-->*
+        out <- out[, c(compiler_by, "speech")] #:-->*
+        }
+
+    if("index_1" %in% names(tidy_speech)){
+        out$index_1 <- unique(tidy_speech$index_1)
+        out$index_2 <- unique(tidy_speech$index_2)
+    }
 
     class(out) <- c(attributes(out)$class, "puy")
-    invisible(out)
+    invisible(add_sex(clean_t(out)))
 
 }
 
 chamber_fit <- function(chamber){
-
         problem <- aux("chamb")[5:8]
         correct <- aux("chamb")[1:4]
         ubic <- which(problem %in% chamber)
@@ -292,6 +586,139 @@ separate_sir <- function(vec){
     }
     vec
 }
+
+
+add_sex <- function(data){
+    data$sex <- ifelse(stringr::str_detect(data$speech, pattern = "^SE\u00d1ORA"), 0, 1)
+    data
+
+}
+
+
+clean_t <- function(x){
+    if("legislature" %in% names(x)){
+        if(is.na(x$legislature[1])){
+            x$legislature <- NA_integer_
+        }
+    }
+    if("chamber" %in% names(x)){
+        if(is.na(x$chamber[1])){
+            x$chamber <- NA_character_
+        }
+           }
+    if("date" %in% names(x)){
+        if(is.na(x$date[1])){
+            x$date <- as.Date(x$date)
+        }
+           }
+    if("id" %in% names(x)){
+        if(is.na(x$id[1])){
+            x$id <- NA_character_
+        }
+            }
+    x$speech <- stringr::str_squish(x$speech)
+    x
+}
+
+
+test_date <- function(from, to, legislature){
+    legislaturas$interval <- lubridate::interval(legislaturas$fecha_inicio, legislaturas$fecha_fin)
+    desde <- which(lubridate::dmy(from) %within% legislaturas$interval)
+    hasta <- which(lubridate::dmy(to) %within% legislaturas$interval)
+    if(sum(desde, hasta) / 2 == legislature) FALSE else TRUE
+
+}
+
+urlp <- function(step){
+    u <- list(
+        step1 = "https://parlamento.gub.uy/documentosyleyes/documentos/diarios-de-sesion?Cpo_Codigo_2=",
+        step2 = "&Lgl_Nro=",
+        step3 = "&DS_Fecha%5Bmin%5D%5Bdate%5D=",
+        step4 = "&DS_Fecha%5Bmax%5D%5Bdate%5D=",
+        step5 = "&Ssn_Nro=&TS_Diario=&tipoBusqueda=T&Texto=&page="
+    )
+    u[[step]]
+}
+
+
+proto_url <- function(chamber, legislature, from, to){
+    paginas <- as.character(c(0:20))
+    url <- purrr::map(paginas,~ paste0(urlp(1),
+                                       chamber,
+                                       urlp(2),
+                                       legislature,
+                                       urlp(3),
+                                       from,
+                                       urlp(4),
+                                       to,
+                                       urlp(5), .)) %>%
+        unlist() %>%
+        purrr::map(~ .x  %>%
+                       rvest::read_html() %>%
+                       rvest::html_nodes(".views-field-DS-File-IMG a") %>%
+                       rvest::html_attr("href") %>%
+                       purrr::map(~ paste0("https://parlamento.gub.uy", .))) %>%
+        unlist()
+    url
+}
+
+
+parseo <- function(x){
+    paste(substring(x, 9, 10), substring(x, 6, 7), substring(x, 1, 4), sep = "-")
+}
+
+fechas_legis <- function(from, to){
+    periodo <- lubridate::as_date(lubridate::dmy(from):lubridate::dmy(to))
+    lista <- list()
+    for(i in 1:nrow(legislaturas)){
+        lista[[paste(i)]] <- lubridate::as_date(lubridate::ymd(legislaturas$fecha_inicio[i]):lubridate::ymd(legislaturas$fecha_fin[i]))
+    }
+    dat <- data.frame(
+        legis  = rep(1:nrow(legislaturas), lengths(lista)),
+        fechas = lubridate::as_date(unlist(lista))
+    )
+    dat[which(dat$fechas %in% periodo),] %>% split(., f = .$legis) %>% lapply(., function(x) range(x$fechas))
+}
+
+
+uncompiler <- function(data){
+    dat <- data
+    comp    <- base::split(dat, dat$id)
+    diarios <- length(comp)
+    unc <- list()
+    for(i in 1:diarios){
+        ud <- comp[[i]]
+        l <- strsplit(ud$speech, "(SE\u00d1OR|SE\u00d1ORA)")
+        largo <- lengths(l)
+        out <- tibble::tibble(
+            legislator  = rep(ud$legislator, largo),
+            legislature = unique(ud$legislature)[1],
+            chamber     = unique(ud$chamber)[1],
+            date        = unique(ud$date)[1],
+            id          = unique(ud$id)[1],
+            speech      = unlist(l),
+            sex         = rep(ud$sex, largo)
+        )
+        out <- out[nchar(out$speech) >= 2,]
+        unc[[i]] <- out
+        return(unc)
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -42,6 +42,7 @@
 #'             \item{\code{date}: session date}
 #'             \item{\code{id}: name \code{file}}
 #'             \item{\code{legislature}: legislature id (period of government)}
+#'             \item{\code{sex}: sex}
 #'             \item{\code{chamber}: chamber to which the document belongs.
 #'             It can be: Chamber of Representatives, Senate, General Assembly or Permanent Commission.}
 #'            }
@@ -53,44 +54,51 @@
 #'
 #' @examples
 #' \donttest{
-#' url <- "http://bit.ly/35AUVF4"
-#' out <- speech_build(file = url)
+#' # url <- speech::speech_url(chamber = "C", from = "17-09-2019", to = "17-09-2019")
+#' # out <- speech_build(file = url)
 #'
-#' out <- speech_build(file = url, compiler = FALSE,
-#'                      quality = TRUE,
-#'                      add.error.sir = c("SEf'IOR"),
-#'                      rm.error.leg = c("PRtSIDENTE", "SUB", "PRfSlENTE"),
-#'                      param = list(char = 6000, drop.page = 3))
+#' # out <- speech_build(file = url, compiler = FALSE,
+#' #                     quality = TRUE,
+#' #                     add.error.sir = c("SEf'IOR"),
+#' #                     rm.error.leg = c("PRtSIDENTE", "SUB", "PRfSlENTE"),
+#' #                     param = list(char = 6000, drop.page = 3))
 #'
-#' out <- list.files(pattern = "*.pdf") %>% speech_build()
+#' # out <- list.files(pattern = "*.pdf") %>% speech_build()
 #'
-#' out <- list.files(pattern = "*.pdf") %>%
-#'     speech_build(., compiler = TRUE, param = list(char = 4500, drop.page = 3))
+#' # out <- list.files(pattern = "*.pdf") %>%
+#' #     speech_build(., compiler = TRUE, param = list(char = 4500, drop.page = 3))
 #' }
 #' @export
 
 speech_build <- function(file, add.error.sir = NULL, rm.error.leg = NULL, compiler = FALSE,
                    quality = FALSE, param = list(char = 6500, drop.page = 2)){
 
-        out <- file %>%
+        out <-
+                file %>%
                 purrr::map(speech.pow,
                            add.error.sir = add.error.sir,
                            rm.error.leg = rm.error.leg,
                            quality = quality,
                            param = list(char = param$char, drop.page = param$drop.page)
                 )
+
         out <- out[!unlist(lapply(out, is.null))]
         out <- out[purrr::map_int(out, nrow) != 0]
-        out <- dplyr::bind_rows(out)
+        out <- do.call(rbind, out)
         out$speech <- stringr::str_squish(out$speech)
 
         if(compiler){
             compiler(tidy_speech = out,
-                     compiler_by = c("legislator", "legislature", "chamber", "date", "id"))
-        }else{
-            invisible(out)
+                     compiler_by = c("legislator",
+                                     "legislature",
+                                     "chamber",
+                                     "date",
+                                     "id"))
+        } else {
+            invisible(add_sex(clean_t(out)))
         }
 }
+
 
 
 

@@ -6,7 +6,7 @@
 \usage{
 speech_recompiler(
   tidy_speech,
-  compiler_by = c("legislator", "party", "legislature", "chamber")
+  compiler_by = c("legislator", "legislature", "chamber", "date", "id", "sex")
 )
 }
 \arguments{
@@ -18,9 +18,8 @@ speech_recompiler(
 data.frame.
 }
 \description{
-It allows to recompile an object of the \code{puy} class, the datasets
-    speech or a data.frame built with \code{speech_build} to which the
-    variable political party was added.
+It allows to recompile the datasets speech or a data.frame built with
+    \code{speech_build} to which the variable political party was added.
 }
 \details{
 The default compilation is that of \ code {speech_build (., compiler = TRUE}).
@@ -29,9 +28,9 @@ The default compilation is that of \ code {speech_build (., compiler = TRUE}).
 }
 \examples{
 \donttest{
-url <- "http://bit.ly/35AUVF4"
-out <- speech_build(file = url)
-out2 <- speech_recompiler(out)
-out2 <- speech_recompiler(out, compiler_by = c("legislator", "legislature", "chamber"))
+# url <- "http://bit.ly/35AUVF4"
+# out <- speech_build(file = url)
+# out2 <- speech_recompiler(out)
+# out2 <- speech_recompiler(out, compiler_by = c("legislator", "legislature", "chamber"))
 }
 }
