@@ -1,6 +1,6 @@
-93f4f952353acef27a5cf2f46ad13dcf *DESCRIPTION
+3a0c5173553bac31d94ead6b89876764 *DESCRIPTION
 31fa8dca039ea2d465054d9a81d53562 *NAMESPACE
-e59e848a610a5b58dfb5c9d064a4d91f *NEWS.md
+5f3cf54d2f1a0a1890a58a01a312b057 *NEWS.md
 e946dea92560861a043616631dde7d37 *R/speech_build.R
 89bd1d441b77c0d3d7b318ce500c3c50 *R/speech_check.R
 a9e5862251b7bccaf1661d18c1ddb319 *R/speech_legis_replace.R
@@ -10,10 +10,10 @@ d2b95e631fb480576e6f548740538e62 *R/speech_url.R
 248a1811fe30c678094f99cf6729e533 *R/speech_view.R
 1ef76c9de6328d0258a425deb507a846 *R/speech_word_count.R
 5ec5dc7b9d13fe53383ef968f4f9fbcf *R/sysdata.rda
-198661c4dc2f932db2f785693bd6e338 *R/utils.R
-1593d97f72df593621ce1dbcaa9e2335 *README.md
-9c48fac17d1e604d0c96138bd3b38734 *man/figures/README-unnamed-chunk-2-1.png
-ca19cdc82d958e48cd32c3830894d267 *man/figures/README-unnamed-chunk-3-1.png
+0b17ba054ae67cf2c0957eef87f681eb *R/utils.R
+d6c795c4e3ddcc5f53b3cde855265d55 *README.md
+b43853e0d9cfc1fe8302cd8d62316db9 *man/figures/README-unnamed-chunk-2-1.png
+3a81a9f06cb16a9a708f7766cd260316 *man/figures/README-unnamed-chunk-3-1.png
 7348bea68e54aa1563ff2e84f07712b3 *man/figures/fspeech.png
 4ad1e3bdc7510079e2cc82070391f774 *man/figures/fspeechcompiler.png
 060be68a05228ef8c81860e2cfd12625 *man/figures/fspeechextract.png
