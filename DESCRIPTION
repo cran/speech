@@ -1,7 +1,7 @@
 Package: speech
 Type: Package
 Title: Legislative Speeches
-Version: 0.1.4
+Version: 0.1.5
 Authors@R: c(person(given = "Nicolas", 
                     family = "Schmidt", 
                     role = c("aut", "cre"), 
@@ -25,13 +25,13 @@ Depends: R (>= 3.6.0)
 URL: https://github.com/Nicolas-Schmidt/speech
 Imports: dplyr, lubridate, magrittr, purrr, stringr, tibble, tm, tidyr,
         pdftools, rvest
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 NeedsCompilation: no
-Packaged: 2021-10-30 14:18:30 UTC; Nicolás Schmidt
+Packaged: 2022-10-03 17:12:15 UTC; Nicolás Schmidt
 Author: Nicolas Schmidt [aut, cre] (<https://orcid.org/0000-0001-5083-5792>),
   Diego Lujan [aut],
   Juan Andres Moraes [aut],
   Elina Gomez [ctb]
 Maintainer: Nicolas Schmidt <nschmidt@cienciassociales.edu.uy>
 Repository: CRAN
-Date/Publication: 2021-10-30 14:40:02 UTC
+Date/Publication: 2022-10-03 17:30:02 UTC
